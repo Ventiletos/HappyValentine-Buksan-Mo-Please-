@@ -17,6 +17,7 @@
             justify-content: center;
             height: 100vh;
             position: relative;
+            margin: 0; /* Remove default margin */
         }
         h1 {
             font-size: 2.2em;
@@ -64,12 +65,15 @@
             margin-bottom: 10px;
         }
 
+        /* Make videos much larger */
         #haha-video, #yay-video {
             display: none;
-            width: 80%;
-            max-width: 500px;
-            margin-top: 20px;
-            border-radius: 15px;
+            width: 100%; /* Full width */
+            height: 100vh; /* Full height */
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: none; /* Remove border */
         }
 
         /* Falling hearts animation */
@@ -109,16 +113,11 @@
     </button>
     <button id="no-btn" onclick="noClicked()">No</button>
 
-    <!-- Hidden Videos -->
-    <video id="haha-video" controls>
-        <source src="videos/haha.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!-- YouTube Video Embed for haha.mp4 replacement -->
+    <iframe id="haha-video" width="560" height="315" src="https://www.youtube.com/embed/LHdwk9YKOcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe>
 
-    <video id="yay-video" controls>
-        <source src="videos/haha1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!-- YouTube Video Embed for haha1.mp4 replacement -->
+    <iframe id="yay-video" width="560" height="315" src="https://www.youtube.com/embed/CBbTWcN1o8w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe>
 
     <!-- Falling Hearts -->
     <div id="falling-hearts"></div>
@@ -183,30 +182,29 @@
                 document.getElementById("question").innerHTML = sadMessages[noClickCount - 1];
             }
 
-            // After 6 clicks, hide buttons and show video
+            // After 6 clicks, hide everything except the video
             if (noClickCount === 6) {
+                document.getElementById("question").style.display = "none";
                 document.getElementById("no-btn").style.display = "none";
                 document.getElementById("yes-btn").style.display = "none";
+                document.getElementById("falling-hearts").style.display = "none";
 
-                // Show and play the video
+                // Show and play the YouTube video
                 let video = document.getElementById("haha-video");
                 video.style.display = "block";
-                video.play();
             }
         }
 
         function yesClicked() {
-            // Hide the question and show the "yay" video
+            // Hide everything except the video
             document.getElementById("question").style.display = "none";
-
-            // Hide buttons after the "Yes" click
             document.getElementById("yes-btn").style.display = "none";
             document.getElementById("no-btn").style.display = "none";
+            document.getElementById("falling-hearts").style.display = "none";
 
-            // Show and play the "yay" video
+            // Show and play the YouTube video
             let yayVideo = document.getElementById("yay-video");
             yayVideo.style.display = "block";
-            yayVideo.play();
         }
     </script>
 </body>
