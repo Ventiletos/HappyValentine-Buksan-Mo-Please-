@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Special</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.2em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        #yes-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #no-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        /* New hover effect */
+        #yes-btn:hover #love3-gif {
+            display: block;
+        }
+
+        #love3-gif {
+            display: none;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px; /* Adjust size as needed */
+        }
+
+        .gif-image {
+            width: 150px;
+            height: 150px;
+            display: none; /* Initially hidden */
+            margin-bottom: 10px;
+        }
+
+        #haha-video, #yay-video {
+            display: none;
+            width: 80%;
+            max-width: 500px;
+            margin-top: 20px;
+            border-radius: 15px;
+        }
+
+        /* Falling hearts animation */
+        .falling-heart {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            color: #ff69b4;
+            animation: fall 5s linear infinite;
+        }
+
+        /* Keyframe animation for falling hearts */
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- GIF Images -->
+    <img id="gif1" class="gif-image" src="Images/1.gif" alt="Sad Reaction">
+    <img id="gif2" class="gif-image" src="Images/2.gif" alt="Sad Reaction 2">
+    <img id="gif3" class="gif-image" src="Images/3.gif" alt="Sad Reaction 3">
+    <img id="gif4" class="gif-image" src="Images/4.gif" alt="Sad Reaction 4">
+    <img id="gif5" class="gif-image" src="Images/5.gif" alt="Sad Reaction 5">
+    <img id="gif6" class="gif-image" src="Images/6.gif" alt="Sad Reaction 6">
+
+    <h1 id="question">Will you be my Valentine? 💘</h1>
+    <button id="yes-btn" onclick="yesClicked()">
+        Yes
+        <!-- Love3 GIF will appear on hover -->
+        <img id="love3-gif" src="Images/love3.gif" alt="Love Reaction">
+    </button>
+    <button id="no-btn" onclick="noClicked()">No</button>
+
+    <!-- Hidden Videos -->
+    <video id="haha-video" controls>
+        <source src="videos/haha.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <video id="yay-video" controls>
+        <source src="videos/haha1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Falling Hearts -->
+    <div id="falling-hearts"></div>
+
+    <script>
+        let noClickCount = 0;
+        let sadMessages = [
+            "Oiyyyyyy? 💔", 
+            "Pleaseeeeee... 😭", 
+            "Awa Naaaa 😢", 
+            "La na bang chance? 💔", 
+            "wahhhhhhhhhhh... 😭💔",
+            "wahhhhhhhhhhh... 😭💔"
+        ];
+
+        // Create Falling Hearts
+        function createFallingHearts() {
+            let heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.getElementById('falling-hearts').appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 7000); // Remove after falling duration
+        }
+
+        // Generate hearts at intervals
+        setInterval(createFallingHearts, 200); // Generate hearts every 200ms
+
+        function noClicked() {
+            // Prevent further action after 6 clicks
+            if (noClickCount >= 6) return;
+
+            noClickCount++;
+
+            // Show GIFs in sequence
+            if (noClickCount === 1) {
+                document.getElementById("gif1").style.display = "block";
+            } else if (noClickCount === 2) {
+                document.getElementById("gif1").style.display = "none";
+                document.getElementById("gif2").style.display = "block";
+            } else if (noClickCount === 3) {
+                document.getElementById("gif2").style.display = "none";
+                document.getElementById("gif3").style.display = "block";
+            } else if (noClickCount === 4) {
+                document.getElementById("gif3").style.display = "none";
+                document.getElementById("gif4").style.display = "block";
+            } else if (noClickCount === 5) {
+                document.getElementById("gif4").style.display = "none";
+                document.getElementById("gif5").style.display = "block";
+            } else if (noClickCount === 6) {
+                document.getElementById("gif5").style.display = "none";
+                document.getElementById("gif6").style.display = "block";
+            }
+
+            // Ensure last message stays and doesn't change after 6 clicks
+            if (noClickCount <= 6) {
+                document.getElementById("question").innerHTML = sadMessages[noClickCount - 1];
+            }
+
+            // After 6 clicks, hide buttons and show video
+            if (noClickCount === 6) {
+                document.getElementById("no-btn").style.display = "none";
+                document.getElementById("yes-btn").style.display = "none";
+
+                // Show and play the video
+                let video = document.getElementById("haha-video");
+                video.style.display = "block";
+                video.play();
+            }
+        }
+
+        function yesClicked() {
+            // Hide the question and show the "yay" video
+            document.getElementById("question").style.display = "none";
+
+            // Hide buttons after the "Yes" click
+            document.getElementById("yes-btn").style.display = "none";
+            document.getElementById("no-btn").style.display = "none";
+
+            // Show and play the "yay" video
+            let yayVideo = document.getElementById("yay-video");
+            yayVideo.style.display = "block";
+            yayVideo.play();
+        }
+    </script>
+</body>
+</html>
